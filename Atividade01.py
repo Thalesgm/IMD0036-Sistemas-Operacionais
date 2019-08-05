@@ -1,3 +1,7 @@
+#IMD0036- Sistemas Operacionais
+#Atidade 1 Criação e Finalização de Processos
+#Discente:Thales Moreira
+#Mat: 2014026290
 import os
 
 def child():
