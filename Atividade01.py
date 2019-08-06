@@ -33,15 +33,17 @@ def kill_cp(a, id):
 	if id == a[0]:
 		print("ID corresponds to PARENT ID. To kill parent ID, use the Kill Parent(P) Option.") 
 	else:
-		if i == 0:
-			while i < len(a):
-				if id == a[i]:
-					os.kill(a[i], 9)
-					a.pop(id)
-					break
+		i = 1
+		while i < len(a):
+			if id == a[i]:
+				os.kill(id, 15)
+				print("Finishing the process")
+				os.waitpid(id, 0)
+				a.pop(i)
+				return
 			i += 1
-		if i == len(a):
-			print("Invalid Process ID")
+	if i == len(a):
+		print("Invalid Process ID")
 
 def program():
 	pids = array.array('i')  
@@ -49,16 +51,16 @@ def program():
 	while True:
 		print_status(pids)
 		reply = input("How would you like to proceed:\nK-Kill a Process\nQ-Quit\n")
-		if reply == 'K' or 'k':
+		if reply == 'K' or reply == 'k':
 			option = input("C-Kill a Child Process?\nP-Kill Parent?(Suicide)\n")
-			if option == 'P'or 'p':
+			if option == 'P'or option == 'p':
 				confirm = input("Are you sure you want to Kill Parent Process(Y,N)\n")
-				if confirm == 'Y' or 'y':
+				if confirm == 'Y' or confirm == 'y':
 					os.kill(os.getpid(), 9)
 				else:
 					continue
-			elif option == 'C' or 'c':
-				pid = int(input("Which process you want to kill?"))
+			elif option == 'C' or option == 'c':
+				pid = int(input("Which process you want to kill?\n"))
 				kill_cp(pids, pid)
 		else:
 			break
