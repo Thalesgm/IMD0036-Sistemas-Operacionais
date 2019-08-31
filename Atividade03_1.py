@@ -1,8 +1,13 @@
 import threading
 import time
 
-maxWorkers = 3 #Total Number of Working Threads
-workCondition = -1 #Current Working Thread - Starts at -1 so no thread will run instantly
+#Time Spent Running each thread
+scheduledTime = 2
+#Total Number of Working Threads, should this variable be changed, create thread commands should be changed
+maxWorkers = 3 
+#Current Working Thread - Starts at -1 so no thread will run instantly
+workCondition = -1 
+
 #Work that will be done by each thread
 def job(i):
     global workCondition
@@ -14,17 +19,17 @@ def job(i):
 
 #CPU Scheduler Runs until last process has been executed, then returns to the first one.
 def cpu():
+    global scheduledTime
     global maxWorkers
     global workCondition
     while True:
         if workCondition < maxWorkers:
             workCondition += 1
             print("Currently Executing thread: ", workCondition)
-            time.sleep(1)
         else:
             workCondition = 0
             print("Currently Executing thread: ", workCondition)
-            time.sleep(1)
+        time.sleep(scheduledTime)
 
 thread0 = threading. Thread(target=job, args= (0,))
 thread1 = threading. Thread(target=job, args= (1,))
