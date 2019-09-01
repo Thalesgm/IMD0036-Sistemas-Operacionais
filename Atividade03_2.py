@@ -1,6 +1,7 @@
 import threading
 import time
 
+#List to store each priority representation as objects of the Priority Class decribed bellw
 priorityList = []
 #Time Spent Running each thread
 scheduledTime = 1
@@ -24,6 +25,7 @@ class Priority:
         realPriority = self.defaultPriority + self.overtimePriority
         return realPriority
 
+#This function fills the priority list using the global variables.
 def createPriority(priorityList):
     global maxdefaultPriority
     global maxWorkers
@@ -36,6 +38,7 @@ def createPriority(priorityList):
             countWorkers -= 1
         countPriority -= 3
 
+#This function returns the next thread to be run, also updates the overtime priority list to avoid starvation.
 def getNextPriority(priorityList):
     highestPriority = priorityList[0].getPriority()
     highestPriorityPos = 0
@@ -51,6 +54,7 @@ def getNextPriority(priorityList):
             priorityList[countUpdate].overtimePriority += 1
         countUpdate += 1
     return highestPriorityPos
+
 #Work that will be done by each thread
 def job(i):
     global workCondition
@@ -59,7 +63,7 @@ def job(i):
             print("Thread ", i, " Working")
         else:
             time.sleep(1)
-
+#CPU scheduler, runs the control functions and also alters the variable that alows threads to do their work. 
 def cpu(priorityList):
     global workCondition
     global scheduledTime
