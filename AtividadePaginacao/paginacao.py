@@ -26,7 +26,7 @@ def printList(pageList):
     i = 0
     print("Páginas no momento na lista")
     while i < len(pageList):
-        print("Posição", i, "Página: ", pageList[i].pageID, ' ', "bitR: ", pageList[i].bitR)
+        print("Posição", i, "|" "Página: ", pageList[i].pageID, '|', "bitR: ", pageList[i].bitR)
         i += 1
 
 #Verifica e Atualiza o bitR das páginas pela regra dos 10segundos
@@ -63,30 +63,13 @@ def addPage(pageList, pageID):
     else:
         lru = getLRU(pageList)
         pageList[lru].updatePage(pageID)
+
+#lista de Páginas
 pageList = []
-#p = Page(1)
-a = 0
-while a < 11:
-    addPage(pageList, a)
-    a += 1
-
-printList(pageList)
-#time.sleep(2)
-#upadtePageList(pageList)
-#print("Atualizando paginas")
-#printList(pageList)
-#time.sleep(9)
-#upadtePageList(pageList)
-#print("atualizando novamente")
-#printList(pageList)
-
-#pageList.append(p)
-#print(p.pageID, ' ', p.bitR, ' ', p.insertTime)
-#time.sleep(12)
-#currentTime = time.time()
-#print(currentTime)
-#p.updateR(currentTime)
-#print(p.pageID, ' ', p.bitR)
-#now = time.time()
-#p.updatePage(now, 50)
-#print(p.pageID, ' ', p.bitR)
+currentID = 0
+while True:
+    addPage(pageList, currentID)
+    currentID += 1
+    printList(pageList)
+    upadtePageList(pageList)
+    time.sleep(2)
