@@ -1,6 +1,16 @@
+#IMD0036 - SISTEMAS OPERACIONAIS - T02
+#Atividade Prática - Gerenciamento de Memória - Paginação
+#Eucharlis Vieria Duarte
+#Thales Gomes Moreira
+
 import datetime, time
 from itertools import cycle
 lru = 0 # Variável Global para controle de LRU
+
+#Variavel Para controlar o tempo entre adição de páginas à lista.
+#Aumentar o tempo para verificar aplicação da regra dos 10 segundos
+sleepTime = 1 
+
 
 #Classe que pode criar e remover referencias à páginas
 class Page:
@@ -16,6 +26,7 @@ class Page:
     def updateR(self, currentTime):
         if (currentTime - self.insertTime) > 10:
             self.bitR = 0
+    #Atualiza dados da página na posição
     def updatePage(self, pageID):
         self.pageID = pageID
         self.insertTime = time.time()
@@ -36,13 +47,16 @@ def upadtePageList(pageList):
     while i < len(pageList):
         pageList[i].updateR(currentTime)
         i += 1
-
+#Retorna a LRU e aponta para o próximo elemento
+#Se LRU = Atual complexidade o(1)
+#Se LRU != Atual complexidade o(n)
 def getLRU(pageList):
     global lru
     currentLRU = 0
     while True:
         if pageList[lru].bitR == 0:
             currentLRU = lru
+            #Verificação para voltar ao começo da lista, caracterizando comportamento de lista circular.
             if lru == 9:
                 lru = 0
             else:
@@ -57,9 +71,11 @@ def getLRU(pageList):
 
 #Adicionar uma nova página à lista
 def addPage(pageList, pageID):
+    #Lista não está cheia
     if len(pageList) < 10:
         p = Page(pageID)
         pageList.append(p)
+    #Lista cheia
     else:
         lru = getLRU(pageList)
         pageList[lru].updatePage(pageID)
@@ -67,9 +83,10 @@ def addPage(pageList, pageID):
 #lista de Páginas
 pageList = []
 currentID = 0
+
 while True:
     addPage(pageList, currentID)
     currentID += 1
     printList(pageList)
     upadtePageList(pageList)
-    time.sleep(2)
+    time.sleep(sleepTime)
