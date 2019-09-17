@@ -1,5 +1,5 @@
 import datetime, time
-
+from itertools import cycle
 global lru
 
 class Page:
@@ -21,15 +21,29 @@ class Page:
         self.bitR = 1
 
 
+def printList(pageList):
+    i = 0
+    while i < len(pageList):
+        print("Página: ", pageList[i].pageID, ' ', "bitR: ", pageList[i].bitR)
+        i += 1
 
+pageList = []
+#p = Page(1)
+a = 0
+while a < 10:
+    p = Page(a)
+    pageList.append(p)
+    a += 1
 
-p = Page(1)
-print(p.pageID, ' ', p.bitR, ' ', p.insertTime)
-time.sleep(12)
-currentTime = time.time()
-print(currentTime)
-p.updateR(currentTime)
-print(p.pageID, ' ', p.bitR)
-now = time.time()
-p.updatePage(now, 50)
-print(p.pageID, ' ', p.bitR)
+printList(pageList)
+
+#pageList.append(p)
+#print(p.pageID, ' ', p.bitR, ' ', p.insertTime)
+#time.sleep(12)
+#currentTime = time.time()
+#print(currentTime)
+#p.updateR(currentTime)
+#print(p.pageID, ' ', p.bitR)
+#now = time.time()
+#p.updatePage(now, 50)
+#print(p.pageID, ' ', p.bitR)
