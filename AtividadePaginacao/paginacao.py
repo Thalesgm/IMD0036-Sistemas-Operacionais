@@ -1,5 +1,7 @@
 import datetime, time
 
+global lru
+
 class Page:
     pageID = 0 # Identificador para a página
     bitR = 0 #bit de representação de uso 0 ou 1
@@ -13,6 +15,13 @@ class Page:
     def updateR(self, currentTime):
         if (currentTime - self.insertTime) > 10:
             self.bitR = 0
+    def updatePage(self, currentTime, pageID):
+        self.pageID = pageID
+        self.insertTime = currentTime
+        self.bitR = 1
+
+
+
 
 p = Page(1)
 print(p.pageID, ' ', p.bitR, ' ', p.insertTime)
@@ -20,4 +29,7 @@ time.sleep(12)
 currentTime = time.time()
 print(currentTime)
 p.updateR(currentTime)
+print(p.pageID, ' ', p.bitR)
+now = time.time()
+p.updatePage(now, 50)
 print(p.pageID, ' ', p.bitR)
