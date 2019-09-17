@@ -1,6 +1,6 @@
 import datetime, time
 from itertools import cycle
-global lru
+lru = 0 # Variável Global para controle de LRU
 
 #Classe que pode criar e remover referencias à páginas
 class Page:
@@ -16,9 +16,9 @@ class Page:
     def updateR(self, currentTime):
         if (currentTime - self.insertTime) > 10:
             self.bitR = 0
-    def updatePage(self, currentTime, pageID):
+    def updatePage(self, pageID):
         self.pageID = pageID
-        self.insertTime = currentTime
+        self.insertTime = time.time()
         self.bitR = 1
 
 #imprime a lista de páginas
@@ -39,7 +39,7 @@ def upadtePageList(pageList):
 
 def getLRU(pageList):
     global lru
-    currentLRU
+    currentLRU = 0
     while True:
         if pageList[lru].bitR == 0:
             currentLRU = lru
@@ -54,23 +54,31 @@ def getLRU(pageList):
                 lru = 0
             else:
                 lru += 1
+
+#Adicionar uma nova página à lista
+def addPage(pageList, pageID):
+    if len(pageList) < 10:
+        p = Page(pageID)
+        pageList.append(p)
+    else:
+        lru = getLRU(pageList)
+        pageList[lru].updatePage(pageID)
 pageList = []
 #p = Page(1)
 a = 0
-while a < 10:
-    p = Page(a)
-    pageList.append(p)
+while a < 11:
+    addPage(pageList, a)
     a += 1
 
 printList(pageList)
-time.sleep(2)
-upadtePageList(pageList)
-print("Atualizando paginas")
-printList(pageList)
-time.sleep(9)
-upadtePageList(pageList)
-print("atualizando novamente")
-printList(pageList)
+#time.sleep(2)
+#upadtePageList(pageList)
+#print("Atualizando paginas")
+#printList(pageList)
+#time.sleep(9)
+#upadtePageList(pageList)
+#print("atualizando novamente")
+#printList(pageList)
 
 #pageList.append(p)
 #print(p.pageID, ' ', p.bitR, ' ', p.insertTime)
