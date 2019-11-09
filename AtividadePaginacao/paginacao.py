@@ -35,7 +35,7 @@ class Page:
 #imprime a lista de páginas
 def printList(pageList):
     i = 0
-    print("Páginas no momento na lista")
+    print("Páginas no ciclo")
     while i < len(pageList):
         print("Posição", i, "|" "Página: ", pageList[i].pageID, '|', "bitR: ", pageList[i].bitR)
         i += 1
